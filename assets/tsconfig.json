@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "lib": ["dom", "es2015"],
+    "experimentalDecorators": true,
+    "isolatedModules": true
+  }
+}
