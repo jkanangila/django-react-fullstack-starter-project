@@ -8,6 +8,8 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 
 PROJECT_NAME = os.environ.get("PROJECT_NAME")
+if not PROJECT_NAME:
+    raise RuntimeError('Environment variable PROJECT_NAME not set')
 SETTINGS_MODULE = f"{PROJECT_NAME}.settings"
 
 

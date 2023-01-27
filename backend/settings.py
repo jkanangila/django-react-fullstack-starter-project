@@ -3,19 +3,19 @@ from pathlib import Path
 
 from dj_database_url import config as database_config
 from manage import PROJECT_NAME
+from utils import get_log_folder_path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-68*4p4u3dhljd)%ckj6gcg1v%y#!g@3)*55q68$q#8bxwe@!5*"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# LOAD ENVIRONMENT VARIABLES
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = bool(os.environ.get("DEBUG", 1))
+DATABASE_URL = os.environ.get("DATABASE_URL")
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "dev")
+LOGS_DIRECTORY = get_log_folder_path(ENVIRONMENT)
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -27,8 +27,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "livereload",
 ]
+
+# Add development only apps
+if ENVIRONMENT == "dev":
+    INSTALLED_APPS += [
+        "django_extensions",
+        "livereload",
+    ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -44,8 +50,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "livereload.middleware.LiveReloadScript",
 ]
+
+# Add development only middlewares
+if ENVIRONMENT == "dev":
+    MIDDLEWARE += [
+        "livereload.middleware.LiveReloadScript",
+    ]
 
 ROOT_URLCONF = f"{PROJECT_NAME}.urls"
 
@@ -74,8 +85,6 @@ WSGI_APPLICATION = f"{PROJECT_NAME}.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-DATABASE_URL = os.environ.get("DATABASE_URL", BASE_DIR / "db.sqlite3")
-
 DATABASES = {
     "default": database_config(
         default=DATABASE_URL,
@@ -103,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # LOGINS
-LOGS_DIRECTORY = os.environ.get("LOGS_DIRECTORY", "/logs")
 
 LOGGING = {
     "version": 1,
@@ -198,3 +206,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Generate ERD that can be visualized in graphviz
+GRAPH_MODELS = {
+    "all_applications": True,
+    "graph_models": True,
+}

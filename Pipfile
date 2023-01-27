@@ -7,12 +7,14 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 python-dotenv = "*"
-django-livereload-server = "*"
 colorlog = "*"
 dj-database-url = "*"
 
 [dev-packages]
+django-livereload-server = "*"
+django-extensions = "*"
 ipykernel = "*"
+pylint = "*"
 
 [requires]
-python_version = "3.8.10"
+python_version = "*"

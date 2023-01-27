@@ -1,1 +1,2 @@
 from .render_react_page_util import render_react_page
+from .log_folder import get_log_folder_path

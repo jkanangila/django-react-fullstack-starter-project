@@ -1,5 +1,5 @@
-"""A script that's needed to setup django if it's not already running on a server.
-It allows interactions with django's queryset in every python file it's imported in.
+"""Import this file at the top of your python module to interact with django's context
+if the development server is not running
 """
 import os
 import sys
