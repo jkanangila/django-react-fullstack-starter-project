@@ -12,7 +12,3 @@ def generate_erd():
     ]
     for commnand in commands:
         subprocess.run(commnand.split(" "))
-
-
-def rename_project():
-    pass
