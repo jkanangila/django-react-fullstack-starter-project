@@ -5,9 +5,8 @@ import os
 import sys
 
 import django
-from dotenv import find_dotenv, load_dotenv
 
-load_dotenv(find_dotenv())
+from manage import SETTINGS_MODULE
 
 # Find the project base directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,8 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
 # The DJANGO_SETTINGS_MODULE has to be set to allow us to access django imports
-settings = f"{os.environ.get('PROJECT_NAME')}.settings"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", SETTINGS_MODULE)
 
 #  Allow queryset filtering asynchronously when running in a Jupyter notebook
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
