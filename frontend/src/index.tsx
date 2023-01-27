@@ -1,10 +1,10 @@
 import React, { LazyExoticComponent, Suspense } from "react";
 import ReactDOM from "react-dom";
 
-let App = React.lazy(() => import("./App"));
-let TodosIndexPage = React.lazy(() => import("./todos/pages/index.page"));
+const App = React.lazy(() => import("./App"));
+const TodosIndexPage = React.lazy(() => import("./todos/pages/index.page"));
 
-let declarePage = (id: string, Content: LazyExoticComponent<any>) => {
+const declarePage = (id: string, Content: LazyExoticComponent<any>) => {
   try {
     ReactDOM.render(
       <Suspense fallback={<></>}>
