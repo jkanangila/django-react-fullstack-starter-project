@@ -1,0 +1,29 @@
+{
+  "name": "assets",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-react-refresh-wrap": "^2.3.0",
+    "parcel": "^2.3.0"
+  },
+  "scripts": {
+    "start": "yarn parcel watch src/index.js",
+    "build": "yarn parcel build src/index.js"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

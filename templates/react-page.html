@@ -1,0 +1,18 @@
+<!-- context
+    element_id
+    page_context
+-->
+
+{% extends "base.html" %}
+<!-- prettier ignore -->
+{% load static %}
+
+<!-- prettier ignore -->
+{% block content %}
+<div id="{{ element_id }}"></div>
+{{ page_context | json_script:'page-context' }}
+
+<!-- Look for index.js inside static directory -->
+<!-- 'index.js' path should be edited based on bundler -->
+<script src="{% static 'index.js' %}"></script>
+{% endblock %}
