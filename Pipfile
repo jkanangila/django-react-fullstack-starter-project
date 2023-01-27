@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 python-dotenv = "*"
 django-livereload-server = "*"
+colorlog = "*"
+dj-database-url = "*"
 
 [dev-packages]
 ipykernel = "*"

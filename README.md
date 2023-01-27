@@ -34,6 +34,11 @@ Django starter project with react integration.
 
 ---
 
+- packages installed:
+
+  - material-ui
+  -
+
 - The react app is located inside the frontend directory.
 
 - Specify a mounting point for your view inside your `index.tsx`

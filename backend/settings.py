@@ -1,5 +1,7 @@
+import os
 from pathlib import Path
 
+from dj_database_url import config as database_config
 from manage import PROJECT_NAME
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +28,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "livereload",
-    "todos.apps.TodosConfig",
 ]
 
 REST_FRAMEWORK = {
@@ -72,13 +73,16 @@ WSGI_APPLICATION = f"{PROJECT_NAME}.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
+DATABASE_URL = os.environ.get("DATABASE_URL", BASE_DIR / "db.sqlite3")
+
+DATABASES = {
+    "default": database_config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -97,6 +101,76 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# LOGINS
+LOGS_DIRECTORY = os.environ.get("LOGS_DIRECTORY", "/logs")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "formatters": {
+        "color": {
+            "()": "colorlog.ColoredFormatter",
+            "format": "%(log_color)s %(asctime)s [%(levelname)-s] %(filename)-4s %(message)s",
+            "log_colors": {
+                "DEBUG": "blue",
+                "INFO": "green",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "bold_red",
+            },
+            "style": "%",
+        },
+        "verbose": {
+            "format": "{asctime} [{levelname}] {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "color",
+        },
+        "mail_admins": {
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+            "formatter": "color",
+        },
+        "runtime": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOGS_DIRECTORY,
+            "maxBytes": 15728640,  # 1024 * 1024 * 15B = 15MB
+            "backupCount": 10,
+            "formatter": "verbose",
+        },
+        "null": {
+            "level": "INFO",
+            "class": "logging.NullHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console", "runtime"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "runtime"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+        "django.utils.autoreload": {
+            "handlers": ["null"],
+            "propagate": False,
+            "level": "CRITICAL",
+        },
+    },
+}
 
 
 # Internationalization

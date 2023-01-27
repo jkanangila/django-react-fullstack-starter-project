@@ -2,7 +2,6 @@ import React, { LazyExoticComponent, Suspense } from "react";
 import ReactDOM from "react-dom";
 
 const App = React.lazy(() => import("./App"));
-const TodosIndexPage = React.lazy(() => import("./todos/pages/index.page"));
 
 const declarePage = (id: string, Content: LazyExoticComponent<any>) => {
   try {
@@ -18,4 +17,3 @@ const declarePage = (id: string, Content: LazyExoticComponent<any>) => {
 };
 
 declarePage("app", App);
-declarePage("todos-index", TodosIndexPage);
