@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const usePageContext = <T = any>() => {
+const usePageContext = <T = any>() => {
   const [pageContext, setPageContext] = useState<T | undefined>(undefined);
 
   useEffect(() => {
@@ -10,3 +10,5 @@ export const usePageContext = <T = any>() => {
 
   return pageContext as T;
 };
+
+export default usePageContext;

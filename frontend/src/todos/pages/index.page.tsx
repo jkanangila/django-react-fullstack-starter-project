@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { usePageContext } from "../../utils/usePageContext";
+import { usePageContext } from "../../utils";
 
 interface Todo {
   id: number;
@@ -13,6 +13,7 @@ const TodosIndexPage = memo(() => {
   return (
     <>
       <h1>React todos page</h1>
+      <p>Some test modifications</p>
       <ul>
         {todos?.map((todo) => (
           <li key={todo.id}>{todo.title}</li>
