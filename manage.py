@@ -3,8 +3,11 @@
 import os
 import sys
 from pathlib import Path
+
 from dotenv import find_dotenv, load_dotenv
+
 from utils import USER_DEFINED_SCRIPTS, utils_scripts_resolver
+
 load_dotenv(find_dotenv())
 
 BASE_DIR = Path(__file__).resolve().parent

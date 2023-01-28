@@ -5,6 +5,8 @@ from dj_database_url import config as database_config
 from manage import PROJECT_NAME
 from utils import get_log_folder_path
 
+from .additional_settings import JAZZMIN_SETTINGS, JAZZMIN_UI_TWEAKS
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,6 +22,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
